@@ -5,13 +5,10 @@ import site
 basepath = "/".join(os.path.abspath(__file__).split("/")[0:-1])
 
 sys.path.append(basepath)
-sys.path.append(basepath + '/bin')
-sys.path.append(basepath + '/archivist')
-sys.path.append(basepath + '/lib/python2.7')
-sys.path.append(basepath + '/lib/python2.7/site-packages')
-                 
-site.addsitedir(basepath + '/lib/python2.7')
-site.addsitedir(basepath + '/lib/python2.7/site-packages')
+
+for path in ['bin', 'archivist', 'lib/python2.7', 'lib/python2.7/site-packages']:
+	sys.path.append(basepath + '/' + path)
+	site.addsitedir(basepath + '/' + path)
 
 os.environ['PYTHONPATH'] = basepath + '/lib/python2.7'
 os.environ['DJANGO_SETTINGS_MODULE'] = 'archivist.settings'
