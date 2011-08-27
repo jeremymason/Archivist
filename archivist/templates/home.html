@@ -1,0 +1,16 @@
+{% extends 'skeleton.html' %}
+
+{% block page_class %}home-page{% endblock %}
+
+{% block content %}
+<h3>All programs</h3>
+	{% if programs %}
+	    <ul>
+	    {% for program in programs %}
+	        <li><a href="/program/{{ program.id }}/">{{ program.title }}</a></li>
+	    {% endfor %}
+	    </ul>
+	{% else %}
+	    <p>No programs are available.</p>
+	{% endif %}
+{% endblock %}

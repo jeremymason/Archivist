@@ -1,0 +1,46 @@
+Validating models...
+
+Traceback (most recent call last):
+  File "manage.py", line 14, in <module>
+    execute_manager(settings)
+  File "/home/ubuntu/weru/local/lib/python2.7/site-packages/django/core/management/__init__.py", line 438, in execute_manager
+    utility.execute()
+  File "/home/ubuntu/weru/local/lib/python2.7/site-packages/django/core/management/__init__.py", line 379, in execute
+    self.fetch_command(subcommand).run_from_argv(self.argv)
+  File "/home/ubuntu/weru/local/lib/python2.7/site-packages/django/core/management/base.py", line 191, in run_from_argv
+    self.execute(*args, **options.__dict__)
+  File "/home/ubuntu/weru/local/lib/python2.7/site-packages/django/core/management/base.py", line 220, in execute
+    output = self.handle(*args, **options)
+  File "/home/ubuntu/weru/local/lib/python2.7/site-packages/django/core/management/commands/runserver.py", line 67, in handle
+    self.run(*args, **options)
+  File "/home/ubuntu/weru/local/lib/python2.7/site-packages/django/core/management/commands/runserver.py", line 76, in run
+    autoreload.main(self.inner_run, args, options)
+  File "/home/ubuntu/weru/local/lib/python2.7/site-packages/django/utils/autoreload.py", line 131, in main
+    reloader(main_func, args, kwargs)
+  File "/home/ubuntu/weru/local/lib/python2.7/site-packages/django/utils/autoreload.py", line 104, in python_reloader
+    reloader_thread()
+  File "/home/ubuntu/weru/local/lib/python2.7/site-packages/django/utils/autoreload.py", line 83, in reloader_thread
+    ensure_echo_on()
+  File "/home/ubuntu/weru/local/lib/python2.7/site-packages/django/utils/autoreload.py", line 77, in ensure_echo_on
+    attr_list = termios.tcgetattr(fd)
+termios.error: (25, 'Inappropriate ioctl for device')
+Unhandled exception in thread started by <bound method Command.inner_run of <django.contrib.staticfiles.management.commands.runserver.Command object at 0xb714780c>>
+Error in sys.excepthook:
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/apport_python_hook.py", line 48, in apport_excepthook
+    if not enabled():
+TypeError: 'NoneType' object is not callable
+
+Original exception was:
+Traceback (most recent call last):
+  File "/home/ubuntu/weru/local/lib/python2.7/site-packages/django/core/management/commands/runserver.py", line 88, in inner_run
+    self.validate(display_num_errors=True)
+  File "/home/ubuntu/weru/local/lib/python2.7/site-packages/django/core/management/base.py", line 249, in validate
+    num_errors = get_validation_errors(s, app)
+  File "/home/ubuntu/weru/local/lib/python2.7/site-packages/django/core/management/validation.py", line 140, in get_validation_errors
+    for r in rel_opts.get_all_related_many_to_many_objects():
+  File "/home/ubuntu/weru/local/lib/python2.7/site-packages/django/db/models/options.py", line 401, in get_all_related_many_to_many_objects
+    cache = self._fill_related_many_to_many_cache()
+  File "/home/ubuntu/weru/local/lib/python2.7/site-packages/django/db/models/options.py", line 418, in _fill_related_many_to_many_cache
+    cache = SortedDict()
+TypeError: 'NoneType' object is not callable

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+rm -rf bin lib .Python include setup*
+find ./ | grep pyc$ | xargs rm
+python ./virtualenv.py .
+source bin/activate
+pip install -r archivist/requirements.txt
+cd archivist
+

@@ -1,0 +1,25 @@
+{% extends 'skeleton.html' %}
+
+{% block page_class %}Program{% endblock %}
+
+{% block content %}
+	{% if program %}
+<h3>Program: {{ program.title }}</h3>
+	    <table>
+	        <tr><td>ID</td>
+		<td><strong>{{ program.id }}</strong></td>
+		</tr><tr>
+		<td>Title&nbsp;</td>
+		<td><strong>{{ program.title }}</strong></td>
+		</tr><tr>
+		<td>Duration&nbsp;</td>
+		<td><strong>{{ program.duration }}</strong></td>
+		</tr><tr>
+		<td>People&nbsp;</td>
+		<td><strong>{% for person in program.people.all %}{{ person.first_name }} {{ person.last_name }}<br/>{% endfor %}</strong></td>
+		</tr>
+	    </table>
+	{% else %}
+	    <p>Program not found</p>
+	{% endif %}
+{% endblock %}

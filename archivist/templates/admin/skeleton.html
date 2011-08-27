@@ -1,0 +1,145 @@
+{% load url from future %}<!DOCTYPE html> 
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]--> 
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]--> 
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]--> 
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]--> 
+<head> 
+ 
+	<!-- Basic Page Needs
+  ================================================== --> 
+	<meta charset="utf-8"> 
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}{% endblock %}" />
+    <meta name="author" content="{% block meta_author %}{% endblock %}" />
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;" />
+    
+    {# TODO: <link rel="shortcut icon" href="{{ STATIC_URL }}images/favicon.ico" /> #}
+    {# TODO: <link rel="apple-touch-icon" href="{{ STATIC_URL }}images/apple-touch-icon.png" /> #}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css?v=2" />
+    {% block css %}{% endblock %}
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]--> 
+ 
+	<!-- Mobile Specific Metas
+  ================================================== --> 
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> 
+ 
+	<!-- CSS
+  ================================================== --> 
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/base.css"> 
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/skeleton.css"> 
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/layout.css"> 
+ 
+	<!-- Favicons
+	================================================== --> 
+	<link rel="shortcut icon" href="{{ STATIC_URL }}images/favicon.ico"> 
+	<link rel="apple-touch-icon" href="{{ STATIC_URL }}images/apple-touch-icon.png"> 
+	<link rel="apple-touch-icon" sizes="72x72" href="{{ STATIC_URL }}images/apple-touch-icon-72x72.png"> 
+	<link rel="apple-touch-icon" sizes="114x114" href="{{ STATIC_URL }}images/apple-touch-icon-114x114.png"> 
+ 
+    <script src="{{ STATIC_URL }}js/modernizr-2.0.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% load adminmedia %}{% admin_media_prefix %}css/base.css{% endblock %}" />
+	{% block extrastyle %}{% endblock %}
+	<!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="{% block stylesheet_ie %}{% load adminmedia %}{% admin_media_prefix %}css/ie.css{% endblock %}" /><![endif]-->
+	{% if LANGUAGE_BIDI %}<link rel="stylesheet" type="text/css" href="{% block stylesheet_rtl %}{% admin_media_prefix %}css/rtl.css{% endblock %}" />{% endif %}
+	<script type="text/javascript">window.__admin_media_prefix__ = "{% filter escapejs %}{% admin_media_prefix %}{% endfilter %}";</script>
+	{% block extrahead %}{% endblock %}
+	{% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE" />{% endblock %}
+
+</head> 
+{% load i18n %}
+
+<body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}">
+	{% block body %}
+	<!-- Primary Page Layout
+	================================================== --> 
+
+	<!-- Delete everything in this .container and get started on your own site! --> 
+
+	<div class="container"> 
+		<div class="sixteen columns"> 
+
+		{% if not is_popup %}
+        <header>
+		    <!-- Header -->
+		    <div id="header">
+	            <div id="branding">
+		        {% block branding %}{% endblock %}
+		        </div>
+		        {% if user.is_active and user.is_staff %}
+		        <div id="user-tools">
+		            {% trans 'Welcome,' %}
+		            <strong>{% filter force_escape %}{% firstof user.first_name user.username %}{% endfilter %}</strong>.
+		            {% block userlinks %}
+		                {% url 'django-admindocs-docroot' as docsroot %}
+		                {% if docsroot %}
+		                    <a href="{{ docsroot }}">{% trans 'Documentation' %}</a> /
+		                {% endif %}
+		                {% url 'admin:password_change' as password_change_url %}
+		                {% if password_change_url %}
+		                    <a href="{{ password_change_url }}">
+		                {% else %}
+		                    <a href="{{ root_path }}password_change/">
+		                {% endif %}
+		                {% trans 'Change password' %}</a> /
+		                {% url 'admin:logout' as logout_url %}
+		                {% if logout_url %}
+		                    <a href="{{ logout_url }}">
+		                {% else %}
+		                    <a href="{{ root_path }}logout/">
+		                {% endif %}
+		                {% trans 'Log out' %}</a>
+		            {% endblock %}
+		        </div>
+		        {% endif %}
+		        {% block nav-global %}{% endblock %}
+		    </div>
+		    <!-- END Header -->
+        </header>
+	    {% block breadcrumbs %}<div class="breadcrumbs"><a href="/">{% trans 'Home' %}</a>{% if title %} &rsaquo; {{ title }}{% endif %}</div>{% endblock %}
+	    {% endif %}
+
+		{% if messages %}
+			<ul class="messagelist">
+				{% for message in messages %}
+				<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+				{% endfor %}
+			</ul>
+		{% endif %}
+
+        <div id="main" role="main">
+			<div id="content" class="{% block coltype %}colM{% endblock %}">
+				{% block pretitle %}{% endblock %}
+				{% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}
+				{% block content %}
+				{% block object-tools %}{% endblock %}
+				{{ content }}
+				{% endblock %}
+				{% block sidebar %}{% endblock %}
+				<br class="clear" />
+			</div>
+		</div>
+
+        <footer>
+            {% block footer %}<div id="footer"></div>{% endblock %}
+        </footer>
+	</div>  <!-- end of #sixteen columns -->
+
+    </div> <!-- end of #container -->
+    
+    
+    {% if debug %}{% include 'includes/debug.html' %}{% endif %}
+    {% block javascript_library %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+    <script>!window.jQuery && document.write(unescape('%3Cscript src="{{ STATIC_URL }}js/jquery.1.6.1.min.js"%3E%3C/script%3E'))</script>
+    {% endblock %}
+    {% block javascript %}{% endblock %}
+    <!--[if lt IE 7 ]>
+    <script src="{{ STATIC_URL }}js/dd_belatedpng.js"></script>
+    <script> DD_belatedPNG.fix('img, .png_bg');</script>
+    <![endif]-->
+{% endblock %}
+</body>
+</html>

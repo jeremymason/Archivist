@@ -1,0 +1,10 @@
+{% extends "admin/skeleton.html" %}
+{% load i18n %}
+
+{% block title %}{{ title }} | {% trans 'Archivist site admin' %}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="/admin/">{% trans 'Archivist administration' %}</a></h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
