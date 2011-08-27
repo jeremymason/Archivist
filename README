@@ -1,0 +1,14 @@
+Add this to the apache config:
+
+        AddHandler cgi-script .cgi
+        AddHandler wsgi-script .wsgi
+        Alias /static/ </path/to/weru/archivist>/static/
+        <Directory "</path/to/weru/archivist>/static">
+                Order allow,deny
+                Options Indexes
+                Allow from all
+                IndexOptions FancyIndexing
+        </Directory>
+        WSGIScriptAlias / </path/to/weru>/django.wsgi
+
+

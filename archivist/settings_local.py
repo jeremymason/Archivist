@@ -4,6 +4,7 @@
 # The settings_local.py contains only site specific information and should not
 # be part of the svn repository of the project. It should be part of the
 # hosting svn repository.
+import os 
 
 DEBUG = True #TODO set to off for live, staging and preview
 TEMPLATE_DEBUG = DEBUG
@@ -23,7 +24,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'archive.db',                      # Or path to database file if using sqlite3.
+        'NAME': "/".join(os.path.abspath(__file__).split("/")[0:-1]) +'/archive.db',                      # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
