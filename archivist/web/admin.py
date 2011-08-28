@@ -6,7 +6,7 @@ class DigitalFileParticipantInline(admin.TabularInline):
     extra = 1
 
 class DigitalFileAdmin(admin.ModelAdmin):
-    inlines = (DigitalFileParticipant,)
+    inlines = (DigitalFileParticipantInline,)
 
 
 class SeriesParticipantInline(admin.TabularInline):
