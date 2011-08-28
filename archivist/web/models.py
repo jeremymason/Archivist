@@ -14,6 +14,7 @@ class DigitalFileLocations(Model):
 
 
 class DigitalFile(Model):
+    program = ForeignKey('Program', null=True)
     format = CharField(max_length=500)
     sample_rate = IntegerField(null=True)
     size = IntegerField(null=True)
