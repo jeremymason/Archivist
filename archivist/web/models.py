@@ -104,8 +104,14 @@ class Person(Model):
 
 
 class Role(Model):
+    APPLIES_TO_CHOICES = (
+        ('Program', 'Program'),
+        ('Series', 'Series'),
+        ('Source', 'Source'),
+        ('DigitalFile', 'Digital File'),
+    )
     role = CharField(max_length=50, null=False)
-    applies_to = CharField(max_length=50, null=False)
+    applies_to = CharField(max_length=50, null=False, choices=APPLIES_TO_CHOICES)
     source = CharField(max_length=500, blank=True)
 
     def __unicode__(self):
@@ -146,24 +152,24 @@ class Program(Model):
 
 class ProgramParticipant(Model):
     person = ForeignKey(Person)
-    role = ForeignKey(Role)
+    role = ForeignKey(Role, limit_choices_to = {'applies_to__exact': 'Program'})
     program = ForeignKey(Program)
 
 
 class SeriesParticipant(Model):
     person = ForeignKey(Person)
-    role = ForeignKey(Role)
+    role = ForeignKey(Role, limit_choices_to = {'applies_to__exact': 'Series'})
     series = ForeignKey(Series)
 
 
 class SourceParticipant(Model):
     person = ForeignKey(Person)
-    role = ForeignKey(Role)
+    role = ForeignKey(Role, limit_choices_to = {'applies_to__exact': 'Source'})
     source = ForeignKey(Source)
 
 
 class DigitalFileParticipant(Model):
     person = ForeignKey(Person)
-    role = ForeignKey(Role)
+    role = ForeignKey(Role, limit_choices_to = {'applies_to__exact': 'DigitalFile'})
     digital_file = ForeignKey(DigitalFile)
 
