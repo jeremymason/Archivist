@@ -19,12 +19,12 @@ class DigitalFile(Model):
     sample_rate = IntegerField(null=True)
     size = IntegerField(null=True)
     bit_depth = IntegerField(max_length=500, null=False)
-    locations = ForeignKey(DigitalFileLocations, null=True)
+    locations = ForeignKey('DigitalFileLocation', null=True)
     tracks = IntegerField(null=True)
     date_digitized = DateField(null=True)
 
     def __unicode__(self):
-        return self.format + " " + self.sample_rate
+        return str(self.program.title) + " (format: " + str(self.format) + ", rate: " + str(self.sample_rate) + ")"
 
 
 class DigitalFileLocation(Model):
@@ -49,7 +49,7 @@ class Source(Model):
     location = CharField(max_length=500, null=True)
 
     def __unicode__(self):
-        return self.number + " " + self.format + " " + self.speed
+        return str(self.number) + " " + str(self.format) + " " + str(self.speed)
 
 
 class Series(Model):
