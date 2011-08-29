@@ -133,7 +133,7 @@ class Program(Model):
     subjects = ManyToManyField(Subject)
     duration = CharField(max_length=10, blank=True)
     first_broadcast = CharField(max_length=25, blank=True)
-    member_of = ForeignKey(Series, blank=True)
+    member_of = ForeignKey(Series, blank=True, null=True)
     rights = ForeignKey(Rights, blank=True)
     people = ManyToManyField(Person, through='ProgramParticipant')
 
