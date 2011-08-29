@@ -62,5 +62,6 @@ ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 # Allows for certain Django apps to be installed on a local basis,
 # independent of INSTALLED_APPS in the main settings.py file.
 LOCAL_INSTALLED_APPS = (
+	'south',
 	'web',
 )
