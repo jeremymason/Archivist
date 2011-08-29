@@ -4,34 +4,38 @@ from django.db.models import ForeignKey
 from django.db.models import IntegerField
 from django.db.models import Model
 from django.db.models import ManyToManyField
+from django.db.models import OneToOneField
 from django.db.models import TextField
 
-class DigitalFileLocations(Model):
-    location = CharField(max_length=500, null=False)
+
+class DigitalFileLocation(Model):
+    digital_file = ForeignKey('DigitalFile')
+    location = CharField(max_length=500, blank=False)
 
     def __unicode__(self):
         return self.location
 
 
 class DigitalFile(Model):
-    program = ForeignKey('Program', null=True)
-    format = CharField(max_length=500)
-    sample_rate = IntegerField(null=True)
-    size = IntegerField(null=True)
-    bit_depth = IntegerField(max_length=500, null=False)
-    locations = ForeignKey('DigitalFileLocation', null=True)
-    tracks = IntegerField(null=True)
-    date_digitized = DateField(null=True)
+    program = OneToOneField('Program')
+    format = CharField(max_length=50, blank=True)
+    sample_rate = IntegerField(blank=True)
+    size = IntegerField(blank=True)
+    bit_depth = IntegerField(blank=True)
+    tracks = IntegerField(blank=True)
+    date_digitized = DateField(blank=True)
+    who_digitized = ManyToManyField('Person', through='DigitalFileParticipant')
 
     def __unicode__(self):
         return str(self.program.title) + " (format: " + str(self.format) + ", rate: " + str(self.sample_rate) + ")"
 
 
-class DigitalFileLocation(Model):
+class SourceLocation(Model):
     location = CharField(max_length=500, null=False)
 
     def __unicode__(self):
         return self.location
+
 
 class SourceFormat(Model):
     name = CharField(max_length=50, null=False)
@@ -41,12 +45,12 @@ class SourceFormat(Model):
 
 
 class Source(Model):
-    number = IntegerField(null=False)
-    format = ForeignKey(SourceFormat, null=True)
-    speed = CharField(max_length=500, null=False)
-    tracks = IntegerField(null=True)
-    recorded_date = DateField(null=True)
-    location = CharField(max_length=500, null=True)
+    location = ForeignKey(SourceLocation, blank=False)
+    number = IntegerField(blank=False)
+    format = ForeignKey(SourceFormat, blank=True)
+    speed = CharField(max_length=500, blank=True)
+    tracks = IntegerField(blank=True, null=True)
+    recorded_date = DateField(blank=True, null=True)
 
     def __unicode__(self):
         return str(self.number) + " " + str(self.format) + " " + str(self.speed)
@@ -86,7 +90,7 @@ class Genre(Model):
 
 class Subject(Model):
     """ A record represents a single program subject """
-    subject = CharField(max_length=100, null=False)
+    subject = CharField(max_length=250, blank=False)
     source = CharField(max_length=500, blank=True)
 
     def __unicode__(self):
@@ -116,16 +120,18 @@ class Role(Model):
     source = CharField(max_length=500, blank=True)
 
     def __unicode__(self):
-        return self.role
+        return self.applies_to + " " + self.role
 
 
 
 class Program(Model):
-    title = CharField(max_length=500, null=False)
+    ident = CharField(max_length=50, blank=False)
+    title = CharField(max_length=500, blank=False)
     description = TextField(blank=True)
     genre = ForeignKey(Genre)
+    source = ForeignKey(Source)
     subjects = ManyToManyField(Subject)
-    duration = CharField(max_length=20, blank=True)
+    duration = CharField(max_length=10, blank=True)
     first_broadcast = CharField(max_length=25, blank=True)
     member_of = ForeignKey(Series, blank=True)
     rights = ForeignKey(Rights, blank=True)
@@ -173,4 +179,7 @@ class DigitalFileParticipant(Model):
     person = ForeignKey(Person)
     role = ForeignKey(Role, limit_choices_to = {'applies_to__exact': 'DigitalFile'})
     digital_file = ForeignKey(DigitalFile)
+
+    class Meta:
+        unique_together = ("role", "digital_file")
 
