@@ -46,8 +46,8 @@ class SourceFormat(Model):
 
 class Source(Model):
     location = ForeignKey(SourceLocation, blank=False)
-    number = IntegerField(blank=False)
-    format = ForeignKey(SourceFormat, blank=True)
+    number = CharField(max_length=50, blank=False)
+    format = ForeignKey(SourceFormat, blank=False, null=False)
     speed = CharField(max_length=500, blank=True)
     tracks = IntegerField(blank=True, null=True)
     recorded_date = DateField(blank=True, null=True)
