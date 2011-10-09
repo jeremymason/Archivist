@@ -31,9 +31,9 @@ class ProgramParticipantInline(admin.TabularInline):
 
 class ProgramAdmin(admin.ModelAdmin):
     inlines = (ProgramParticipantInline,)
-    list_display = ('title', 'description', 'genre', 'duration')
+    list_display = ('title', 'description', 'duration')
     search_fields = ('title', 'description')
-    list_filter = ('title', 'genre')
+    list_filter = ('title',)
 
 
 admin.site.register(Program, ProgramAdmin)
