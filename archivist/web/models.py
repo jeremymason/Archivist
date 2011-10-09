@@ -128,7 +128,7 @@ class Program(Model):
     ident = CharField(max_length=50, blank=False)
     title = CharField(max_length=500, blank=False)
     description = TextField(blank=True)
-    genre = ForeignKey(Genre)
+    genres = ManyToManyField(Genre)
     source = ForeignKey(Source)
     subjects = ManyToManyField(Subject)
     duration = CharField(max_length=10, blank=True)
