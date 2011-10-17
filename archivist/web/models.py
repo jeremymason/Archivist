@@ -1,3 +1,4 @@
+from django.db.models import BooleanField
 from django.db.models import CharField
 from django.db.models import DateField
 from django.db.models import ForeignKey
@@ -36,6 +37,9 @@ class SourceLocation(Model):
     def __unicode__(self):
         return self.location
 
+    class Meta:
+        ordering= ['location']
+
 
 class SourceFormat(Model):
     name = CharField(max_length=50, null=False)
@@ -43,17 +47,23 @@ class SourceFormat(Model):
     def __unicode__(self):
         return self.name
 
+    class Meta:
+        ordering= ['name']
+
 
 class Source(Model):
+    name = CharField(max_length=100, blank=False)
     location = ForeignKey(SourceLocation, blank=False)
-    number = CharField(max_length=50, blank=False)
     format = ForeignKey(SourceFormat, blank=False, null=False)
     speed = CharField(max_length=500, blank=True)
     tracks = IntegerField(blank=True, null=True)
     recorded_date = DateField(blank=True, null=True)
 
     def __unicode__(self):
-        return str(self.number) + " " + str(self.format) + " " + str(self.speed)
+        return str(self.name)
+
+    class Meta:
+        ordering= ['name']
 
 
 class Series(Model):
@@ -66,6 +76,7 @@ class Series(Model):
 
     class Meta:
         verbose_name_plural = "Series"
+        ordering= ['name']
 
 
 class Rights(Model):
@@ -82,19 +93,23 @@ class Rights(Model):
 class Genre(Model):
     """ A record represents a single genre """
     genre = CharField(max_length=100, null=False)
-    source = CharField(max_length=500, blank=True)
 
     def __unicode__(self):
         return self.genre
+
+    class Meta:
+        ordering= ['genre']
 
 
 class Subject(Model):
     """ A record represents a single program subject """
     subject = CharField(max_length=250, blank=False)
-    source = CharField(max_length=500, blank=True)
 
     def __unicode__(self):
         return self.subject
+
+    class Meta:
+        ordering= ['subject']
 
 
 class Person(Model):
@@ -106,6 +121,7 @@ class Person(Model):
 
     class Meta:
         verbose_name_plural = "People"
+        ordering = ['last_name', 'first_name']
 
 
 class Role(Model):
@@ -129,9 +145,10 @@ class Program(Model):
     title = CharField(max_length=500, blank=False)
     description = TextField(blank=True)
     genres = ManyToManyField(Genre)
-    source = ForeignKey(Source)
     subjects = ManyToManyField(Subject)
+    source = ForeignKey(Source)
     duration = CharField(max_length=10, blank=True)
+    digitized = BooleanField()
     first_broadcast = CharField(max_length=25, blank=True)
     member_of = ForeignKey(Series, blank=True, null=True)
     rights = ForeignKey(Rights, blank=True)
@@ -139,6 +156,9 @@ class Program(Model):
 
     def __unicode__(self):
         return self.title
+
+    class Meta:
+        ordering= ['title']
 
 
 # ???
