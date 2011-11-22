@@ -157,6 +157,12 @@ class Program(Model):
     def __unicode__(self):
         return self.title
 
+    def program_subjects(self):
+        return ", ".join([x.subject for x in self.subjects.all()])
+
+    def program_genres(self):
+        return ", ".join([x.genre for x in self.genres.all()])
+
     class Meta:
         ordering= ['title']
 
