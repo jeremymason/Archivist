@@ -1,0 +1,16 @@
+{% extends 'skeleton.html' %}
+
+{% block page_class %}List{% endblock %}
+
+{% block content %}
+<h3>{{ item_name }}</h3>
+	{% if items %}
+	    <ul>
+	    {% for item in items %}
+	        <li>{{ item|title }}</li>
+	    {% endfor %}
+	    </ul>
+	{% else %}
+	    <p>No {{item_name}} are available.</p>
+	{% endif %}
+{% endblock %}
