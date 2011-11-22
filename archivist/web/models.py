@@ -2,6 +2,7 @@ from django.db.models import BooleanField
 from django.db.models import CharField
 from django.db.models import DateField
 from django.db.models import ForeignKey
+from django.db.models import FloatField
 from django.db.models import IntegerField
 from django.db.models import Model
 from django.db.models import ManyToManyField
@@ -21,7 +22,7 @@ class DigitalFile(Model):
     program = OneToOneField('Program')
     format = CharField(max_length=50, blank=True)
     sample_rate = IntegerField(blank=True)
-    size = IntegerField(blank=True)
+    size = FloatField(blank=True)
     bit_depth = IntegerField(blank=True)
     tracks = IntegerField(blank=True)
     date_digitized = DateField(blank=True)
