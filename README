@@ -2,6 +2,10 @@ NOTES
 =====
 
 
+HTML
+----
+Uses skeleton ( http://getskeleton.com/ ) for the base layout.
+
 Virtualenv
 ----------
 Included for ease
