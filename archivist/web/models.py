@@ -17,6 +17,9 @@ class DigitalFileLocation(Model):
     def __unicode__(self):
         return self.location
 
+    def natural_key(self):
+        return(self.location)
+
 
 class DigitalFile(Model):
     program = OneToOneField('Program')
@@ -31,12 +34,18 @@ class DigitalFile(Model):
     def __unicode__(self):
         return str(self.program.title) + " (format: " + str(self.format) + ", rate: " + str(self.sample_rate) + ")"
 
+    def natural_key(self):
+        return(str(str(self.program.title) + " (format: " + str(self.format) + ", rate: " + str(self.sample_rate) + ")"))
+
 
 class SourceLocation(Model):
     location = CharField(max_length=500, null=False)
 
     def __unicode__(self):
         return self.location
+
+    def natural_key(self):
+        return(self.location)
 
     class Meta:
         ordering= ['location']
@@ -47,6 +56,9 @@ class SourceFormat(Model):
 
     def __unicode__(self):
         return self.name
+
+    def natural_key(self):
+        return(self.name)
 
     class Meta:
         ordering= ['name']
@@ -63,6 +75,9 @@ class Source(Model):
     def __unicode__(self):
         return str(self.name)
 
+    def natural_key(self):
+        return(self.name)
+
     class Meta:
         ordering= ['name']
 
@@ -74,6 +89,9 @@ class Series(Model):
 
     def __unicode__(self):
         return self.name + "("+ self.abbreviation + ")"
+
+    def natural_key(self):
+        return(self.name)
 
     class Meta:
         verbose_name_plural = "Series"
@@ -87,6 +105,9 @@ class Rights(Model):
     def __unicode__(self):
         return self.right_type
 
+    def natural_key(self):
+        return(self.right_type)
+
     class Meta:
         verbose_name_plural = "Rights"
 
@@ -97,6 +118,9 @@ class Genre(Model):
 
     def __unicode__(self):
         return self.genre
+
+    def natural_key(self):
+        return(self.genre)
 
     class Meta:
         ordering= ['genre']
@@ -109,6 +133,9 @@ class Subject(Model):
     def __unicode__(self):
         return self.subject
 
+    def natural_key(self):
+        return(self.subject)
+
     class Meta:
         ordering= ['subject']
 
@@ -119,6 +146,9 @@ class Person(Model):
 
     def __unicode__(self):
         return self.last_name + ", "+ self.first_name
+
+    def natural_key(self):
+        return(str(self.first_name+" "+self.last_name))
 
     class Meta:
         verbose_name_plural = "People"
@@ -139,6 +169,9 @@ class Role(Model):
     def __unicode__(self):
         return self.applies_to + " " + self.role
 
+    def natural_key(self):
+        return(self.role)
+
 
 
 class Program(Model):
@@ -158,6 +191,9 @@ class Program(Model):
     def __unicode__(self):
         return self.title
 
+    def natural_key(self):
+        return(self.ident)
+
     def program_subjects(self):
         return ", ".join([x.subject for x in self.subjects.all()])
 
@@ -166,22 +202,6 @@ class Program(Model):
 
     class Meta:
         ordering= ['title']
-
-
-# ???
-# confusion here
-# ???
-#class Person(Model):
-#    first_name = CharField(max_length=200, null=False)
-#    last_name = CharField(max_length=200, null=False)
-#    role = ForeignKey("Role")
-#    content_type = models.ForeignKey(ContentType)
-#    object_id = models.PositiveIntegerField()
-#    content_object = generic.GenericForeignKey('content_type', 'object_id')
-#
-#    def __unicode__(self):
-#        return self.first_name + " " + self.last_name
-
 
 
 class ProgramParticipant(Model):
