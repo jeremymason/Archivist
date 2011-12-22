@@ -1,3 +1,14 @@
+NOTES
+=====
+
+
+Virtualenv
+----------
+Included for ease
+
+
+Apache config
+-------------
 Add this to the apache config:
 
         AddHandler cgi-script .cgi
