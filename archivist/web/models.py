@@ -18,7 +18,7 @@ class DigitalFileLocation(Model):
         return self.location
 
     def natural_key(self):
-        return(self.location)
+        return((self.location),)
 
 
 class DigitalFile(Model):
@@ -35,7 +35,7 @@ class DigitalFile(Model):
         return str(self.program.title) + " (format: " + str(self.format) + ", rate: " + str(self.sample_rate) + ")"
 
     def natural_key(self):
-        return(str(str(self.program.title) + " (format: " + str(self.format) + ", rate: " + str(self.sample_rate) + ")"))
+        return((str(str(self.program.title) + " (format: " + str(self.format) + ", rate: " + str(self.sample_rate) + ")"),))
 
 
 class SourceLocation(Model):
@@ -45,7 +45,7 @@ class SourceLocation(Model):
         return self.location
 
     def natural_key(self):
-        return(self.location)
+        return((self.location,))
 
     class Meta:
         ordering= ['location']
@@ -58,7 +58,7 @@ class SourceFormat(Model):
         return self.name
 
     def natural_key(self):
-        return(self.name)
+        return((self.name,))
 
     class Meta:
         ordering= ['name']
@@ -76,7 +76,7 @@ class Source(Model):
         return str(self.name)
 
     def natural_key(self):
-        return(self.name)
+        return((self.name,))
 
     class Meta:
         ordering= ['name']
@@ -91,7 +91,7 @@ class Series(Model):
         return self.name + "("+ self.abbreviation + ")"
 
     def natural_key(self):
-        return(self.name)
+        return((self.name,))
 
     class Meta:
         verbose_name_plural = "Series"
@@ -106,7 +106,7 @@ class Rights(Model):
         return self.right_type
 
     def natural_key(self):
-        return(self.right_type)
+        return((self.right_type,))
 
     class Meta:
         verbose_name_plural = "Rights"
@@ -120,7 +120,7 @@ class Genre(Model):
         return self.genre
 
     def natural_key(self):
-        return(self.genre)
+        return((self.genre,))
 
     class Meta:
         ordering= ['genre']
@@ -134,7 +134,7 @@ class Subject(Model):
         return self.subject
 
     def natural_key(self):
-        return(self.subject)
+        return((self.subject,))
 
     class Meta:
         ordering= ['subject']
@@ -148,7 +148,7 @@ class Person(Model):
         return self.last_name + ", "+ self.first_name
 
     def natural_key(self):
-        return(str(self.first_name+" "+self.last_name))
+        return((str(self.first_name+" "+self.last_name),))
 
     class Meta:
         verbose_name_plural = "People"
@@ -170,7 +170,7 @@ class Role(Model):
         return self.applies_to + " " + self.role
 
     def natural_key(self):
-        return(self.role)
+        return((self.role,))
 
 
 
@@ -192,7 +192,7 @@ class Program(Model):
         return self.title
 
     def natural_key(self):
-        return(self.ident)
+        return((self.ident,))
 
     def program_subjects(self):
         return ", ".join([x.subject for x in self.subjects.all()])
