@@ -1,29 +1,38 @@
-NOTES
-=====
+==========================
+Archivist
+==========================
+
+Archivist is a django application for archiving metadata about
+the audio archives of a community radio station.
 
 
-HTML
-----
+==========================
+Notes
+==========================
+
 Uses skeleton ( http://getskeleton.com/ ) for the base layout.
 
-Virtualenv
-----------
-Included for ease
+Virtualenv included for ease
 
 
-Apache config
--------------
+==========================
+Install
+==========================
+
+Hopefully all you have to do is clone the repo and run the Install
+script.  Only tested on Mac and Linux.
+
 Add this to the apache config:
 
-        AddHandler cgi-script .cgi
-        AddHandler wsgi-script .wsgi
-        Alias /static/ </path/to/weru/archivist>/static/
-        <Directory "</path/to/weru/archivist>/static">
-                Order allow,deny
-                Options Indexes
-                Allow from all
-                IndexOptions FancyIndexing
-        </Directory>
-        WSGIScriptAlias / </path/to/weru>/django.wsgi
+    AddHandler cgi-script .cgi
+    AddHandler wsgi-script .wsgi
+    Alias /static/ </path/to/archivist>/archivist/static/
+    <Directory "</path/to/archivist>/archivist/static">
+        Order allow,deny
+        Options Indexes
+        Allow from all
+        IndexOptions FancyIndexing
+    </Directory>
+    WSGIScriptAlias / </path/to/archivist>/django.wsgi
 
 
